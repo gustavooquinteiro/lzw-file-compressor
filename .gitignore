@@ -1,6 +1,12 @@
 # Prerequisites
 *.d
 
+# Build folder
+build/
+
+# Final Compiled files
+mata54comp
+
 # Compiled Object files
 *.slo
 *.lo

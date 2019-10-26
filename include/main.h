@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include "decompressor.h"
 using namespace std;
 
 #define PARAMETER_ERROR "Parametro desconhecido"

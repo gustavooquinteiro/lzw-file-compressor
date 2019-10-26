@@ -1,13 +1,24 @@
 #include "../include/decompressor.h" 
 
-Decompressor::Decompressor()
+Decompressor::Decompressor(string filename)
+{
+    int posicao = filename.find(DOT);
+    string extensao = filename.substr(posicao + 1);
+    if (extensao != EXTENSION)
+    {
+        perror(EXTENSION_ERROR);
+        exit(EXIT_FAILURE);
+    }
+    
+    this->filename = filename;
+}
+
+void Decompressor::lzwDecompression()
 {
     for (unsigned int i = 0; i < 256; i++)
-    {
         simbolos[i] = string(1, i);
-    }
-
-    while(true)
+    
+    while(proximo_codigo < 300) // condição de loop errada
     {
         /**
          * Caso em que o código do simbolo descoberto está no dicionário
@@ -25,9 +36,8 @@ Decompressor::Decompressor()
             simbolos[proximo_codigo++] = simbolo_anterior + simbolos[codigo][0];
         }
         simbolo_anterior = simbolos[codigo];
-
+        proximo_codigo++;
     }
-
 }
 
 Decompressor::~Decompressor()

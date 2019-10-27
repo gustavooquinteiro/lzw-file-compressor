@@ -43,6 +43,8 @@ void Decompressor::lzwDecompression()
 
 Decompressor::~Decompressor()
 {
-
+    arquivo_compactado->close();
+    arquivo_descompactado->close();
+    simbolos.clear();
 }
 

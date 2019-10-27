@@ -3,14 +3,15 @@
 Decompressor::Decompressor(string filename)
 {
     int posicao = filename.find(DOT);
+    string nome_final = filename.substr(0, posicao);
     string extensao = filename.substr(posicao + 1);
     if (extensao != EXTENSION)
     {
-        perror(EXTENSION_ERROR);
+        cerr << EXTENSION_ERROR;
         exit(EXIT_FAILURE);
     }
-    
-    this->filename = filename;
+    arquivo_compactado = new ifstream(filename, ifstream::in);
+    arquivo_descompactado = new ofstream(nome_final, ofstream::out);
 }
 
 void Decompressor::lzwDecompression()

@@ -1,7 +1,3 @@
-# Makefile do Trabalho de Estrutura de Dados e Algoritmos I - MATA40
-# Simulação de Agência Bancária Otimizada utilizando conceito de árvore binária AVL
-# Maiores detalhes do desenvolvimento, vide https://github.com/gustavooquinteiro/SearchBinaryTree
-
 # Nome do projeto e do executável encontrado no diretório corrente após compilação
 PROJ_NAME = mata54comp
 

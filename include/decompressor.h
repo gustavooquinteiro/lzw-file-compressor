@@ -10,20 +10,16 @@
 #include <iostream>
 #include <unordered_map>
 #include "file-manager.h"
-#include "../src/file-manager.cpp"
+
 
 using namespace std;
 
 class Decompressor
 {
     const unsigned int tamanho_maximo = (2 << BITS) - 1;
-    unordered_map<unsigned int, string> simbolos;
-    
+   
     string nome_arquivo_compactado;
     string nome_arquivo_descompactado;
-    string simbolo_anterior;
-    unsigned int codigo;
-    unsigned int proximo_codigo = 257;
 
     public:
         Decompressor(string filename);

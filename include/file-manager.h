@@ -2,6 +2,8 @@
 #define FILE_MANAGER_H
 
 #define EOF_CODE 256
+#define BYTE 8
+#define MASK 0xff
 
 #include <fstream>
 #include <iostream>
@@ -9,7 +11,7 @@ using namespace std;
 
 class InputStream
 {
-    istream& input;
+    ifstream& input;
     int m_code_size;
     int m_available_bits;
     unsigned int m_pending_bits;
@@ -17,16 +19,18 @@ class InputStream
     unsigned int m_next_bump;
     unsigned int m_max_code;
     public:
-        InputStream(istream& input, unsigned int maximo);
+        InputStream(ifstream& input, unsigned int maximo);
         bool operator>> (unsigned int& i);
+        ~InputStream();
 };
 
 class OutputStream
 {
-    ostream& output;
+    ofstream& output;
     public:
-        OutputStream(ostream& output);
+        OutputStream(ofstream& output);
         void operator<< (const string& simbolo);
+        ~OutputStream();
 };
 
 #endif

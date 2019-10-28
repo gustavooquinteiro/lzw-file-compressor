@@ -5,6 +5,7 @@
 #define EXTENSION "cmp"
 #define DOT "."
 #define BITS 14
+#define ALPHABET_SIZE 256
 
 #include <fstream>
 #include <iostream>

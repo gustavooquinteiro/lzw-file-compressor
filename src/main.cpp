@@ -15,7 +15,6 @@ int main(int argc, char* argv[]){
         {
             string filename  = argv[FILENAME_POSITION];
             Decompressor lzw = Decompressor(filename);
-            lzw.lzwDecompression();
         } else
         {
             cerr << PARAMETER_ERROR;

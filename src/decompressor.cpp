@@ -11,7 +11,7 @@ Decompressor::Decompressor(string filename)
         cerr << EXTENSION_ERROR;
         exit(EXIT_FAILURE);
     }
-    
+    lzwDecompression();
 }
 
 void Decompressor::lzwDecompression()
@@ -26,12 +26,12 @@ void Decompressor::lzwDecompression()
     int size = (tamanho_maximo * 11) / 10;
     unordered_map<unsigned int, string> simbolos(size);
     
-    for (unsigned int i = 0; i < 256; i++)
+    for (unsigned int i = 0; i < ALPHABET_SIZE; i++)
         simbolos[i] = string(1, i);
     
     string simbolo_anterior;
     unsigned int codigo;
-    unsigned int proximo_codigo = 257;
+    unsigned int proximo_codigo = ALPHABET_SIZE + 1;
     while(arquivo_compactado >> codigo)
     {
         /**

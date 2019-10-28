@@ -1,6 +1,6 @@
 #include "../include/file-manager.h"
 
- InputStream::InputStream(istream& in, unsigned int maximo):input(in)
+ InputStream::InputStream(ifstream& in, unsigned int maximo):input(in)
 {
     m_available_bits = 0;
     m_pending_bits = 0;
@@ -17,15 +17,17 @@ bool InputStream::operator>> (unsigned int& i)
         char c;
         if (!input.get(c))
             return false;
-        m_pending_bits |= (c & 0xff) << m_available_bits;
-        m_available_bits += 8;
+        m_pending_bits |= (c & MASK) << m_available_bits;
+        m_available_bits += BYTE;
     }
     i = m_pending_bits & ~(~0 << m_code_size);
     m_pending_bits >>= m_code_size;
     m_available_bits -= m_code_size;
-    if (m_current_code < m_max_code){
+    if (m_current_code < m_max_code)
+    {
         m_current_code++;
-        if (m_current_code == m_next_bump){
+        if (m_current_code == m_next_bump)
+        {
             m_next_bump <<= 1;
             m_code_size++;
         }
@@ -36,9 +38,20 @@ bool InputStream::operator>> (unsigned int& i)
         return true;
 }
 
-OutputStream::OutputStream(ostream& out): output(out) {}
+InputStream::~InputStream()
+{
+    input.close();
+}
+
+
+OutputStream::OutputStream(ofstream& out): output(out) {}
 
 void OutputStream::operator<< (const string& simbolo)
 {
     output << simbolo;
+}
+
+OutputStream::~OutputStream()
+{
+    output.close();
 }

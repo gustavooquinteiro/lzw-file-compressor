@@ -16,7 +16,7 @@ CC = g++
 # Flags utilizadas na compilação
 CC_FLAGS = -c \
            -g \
-           -O2 \
+           -std=c++0x \
 
 # Comando de construção de diretório
 MKDIR = mkdir -p
@@ -27,8 +27,10 @@ RM = rm -rf
 GREEN=\033[0;32m
 NC=\033[0m
 
+DFILE = tests/decompress
+CFILE = tests/compress
 # Regras de compilação
-all: objFolder $(PROJ_NAME)
+all: clean objFolder $(PROJ_NAME)
 
 $(PROJ_NAME): $(OBJ)
 	@ $(CC) $^ -o $@
@@ -51,5 +53,23 @@ clean:
 	@ $(RM) build $(PROJ_NAME) *~
 	@ echo -e -n " [${GREEN} OK ${NC}]"
 	@ echo ' Workspace limpo'
+
+tests: init compress decompress check clean-tests
+
+init:
+	@ $(MKDIR) $(DFILE)
+	@ $(MKDIR) $(CFILE)
+
+compress:
+	@ $(foreach file, $(wildcard $(CFILE)/*), ./lzw -c $(file) $(subst $(CFILE), $(DFILE), $(subst $(suffix $(file)),.cmp,$(file))) | echo "Compactando $(file) em $(subst $(CFILE), $(DFILE), $(subst $(suffix $(file)),.cmp,$(file)))";)
+
+decompress:
+	@ $(foreach file, $(wildcard $(DFILE)/*), ./$(PROJ_NAME) -d $(file) | echo "Descompactado $(file)";)
+	
+check:
+	@ $(foreach file, $(wildcard $(CFILE)/*), diff -s $(file) $(subst $(CFILE),$(DFILE),$(subst $(suffix $(file)),,$(file)));)
+	
+clean-tests:
+	@ $(RM) $(DFILE)/**
 
 .PHONY: all clean 

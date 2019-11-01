@@ -56,12 +56,13 @@ clean:
 
 tests: init compress decompress check clean-tests
 
-init:
+init: compression-checker.cpp
+	@ $(CC) $< -o $(subst .cpp,,$<)
 	@ $(MKDIR) $(DFILE)
 	@ $(MKDIR) $(CFILE)
 
 compress:
-	@ $(foreach file, $(wildcard $(CFILE)/*), ./lzw -c $(file) $(subst $(CFILE), $(DFILE), $(subst $(suffix $(file)),.cmp,$(file))) | echo "Compactando $(file) em $(subst $(CFILE), $(DFILE), $(subst $(suffix $(file)),.cmp,$(file)))";)
+	@ $(foreach file, $(wildcard $(CFILE)/*), ./lzw -c $(file) $(subst $(CFILE), $(DFILE), $(subst $(suffix $(file)),.cmp,$(file))) | echo "Compactando $(file) em $(subst $(CFILE), $(DFILE), $(subst $(suffix $(file)),.cmp,$(file)))" && ./compression-checker $(file) $(subst $(CFILE), $(DFILE), $(subst $(suffix $(file)),.cmp,$(file)));)
 
 decompress:
 	@ $(foreach file, $(wildcard $(DFILE)/*), ./$(PROJ_NAME) -d $(file) | echo "Descompactado $(file)";)

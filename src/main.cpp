@@ -2,20 +2,19 @@
 
 int main(int argc, char* argv[]){
     if (argc < 3){
-        perror(USAGE_ERROR);
+        cerr << USAGE_ERROR;
         exit(EXIT_FAILURE);
     } else{
+        LZW algoritmo(argv[FILENAME_POSITION]);
         string parameter = argv[PARAMETER_POSITION];
-        string file_name = argv[FILENAME_POSITION];
         if (parameter == COMPRESS_PARAMETER){
-            // TODO: Chamada a função de compressão
+            algoritmo.compressor();
         } else if (parameter == DECOMPRESS_PARAMETER) {
-            // TODO: Chamada a função de descompressão
+            algoritmo.decompressor();
         } else{
-            perror(PARAMETER_ERROR);
+            cerr << PARAMETER_ERROR;
             exit(EXIT_FAILURE);
         }
     }
-        
-    
+    exit(EXIT_SUCCESS);
 }

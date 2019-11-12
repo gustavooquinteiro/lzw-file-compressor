@@ -1,26 +1,58 @@
 #include "../include/decompressor.h" 
 
-Decompressor::Decompressor(string filename)
+
+LZW::LZW(string filename)
 {
-    nome_arquivo_compactado = filename;
+    nome_arquivo_original = filename;
     int posicao = filename.find(DOT);
-    nome_arquivo_descompactado = filename.substr(0, posicao);
+    nome_arquivo_modificado = filename.substr(0, posicao);
     string extensao = filename.substr(posicao + 1);
     if (extensao != EXTENSION)
     {
         cerr << EXTENSION_ERROR;
         exit(EXIT_FAILURE);
     }
-    lzwDecompression();
 }
 
-void Decompressor::lzwDecompression()
+void LZW::compressor()
+{
+    ifstream arquivo(nome_arquivo_original);
+    InputSymbol arquivo_original(arquivo);
+
+    ofstream arquivo_compactado(nome_arquivo_modificado);
+    OutputSymbol arquivo_modificado(arquivo_compactado, tamanho_maximo);
+
+    int size = (tamanho_maximo * 11) / 10;
+    unordered_map<string, unsigned int> simbolos(size);
+    for (unsigned int i = 0; i < ALPHABET_SIZE; i++)
+        simbolos[string(1, i)] = i;
+    string simbolo_atual = "";
+    char caracter;
+    unsigned int proximo_codigo = ALPHABET_SIZE + 1;
+
+    while( arquivo_original >> caracter){
+        simbolo_atual += caracter;
+        if(simbolos.find(simbolo_atual) == simbolos.end()){
+            if(proximo_codigo <= tamanho_maximo){
+                simbolos [simbolo_atual] = proximo_codigo++;
+            }
+            simbolo_atual.erase(simbolo_atual.size()-1);
+            arquivo_compactado << simbolos[simbolo_atual];
+            simbolo_atual = caracter; 
+        }
+    }
+    if( simbolo_atual.size()){
+        arquivo_compactado << simbolos[simbolo_atual];
+    }
+}
+
+void LZW::decompressor()
 {
   
-    ifstream arquivo(nome_arquivo_compactado);
+    ifstream arquivo(nome_arquivo_original);
     InputStream arquivo_compactado(arquivo, tamanho_maximo);    
     
-    ofstream arquivo_final(nome_arquivo_descompactado);
+    ofstream arquivo_final(nome_arquivo_modificado);
     OutputStream arquivo_descompactado(arquivo_final);
     
     int size = (tamanho_maximo * 11) / 10;
@@ -51,5 +83,5 @@ void Decompressor::lzwDecompression()
     }
 }
 
-Decompressor::~Decompressor(){}
+LZW::~LZW(){}
 

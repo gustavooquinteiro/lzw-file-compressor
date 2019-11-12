@@ -9,6 +9,36 @@
 #include <iostream>
 using namespace std;
 
+// Compressor
+class InputSymbol
+{
+    ifstream& input;
+    public:
+        InputSymbol(ifstream& input);
+        bool operator>> ( char &c);
+        ~InputSymbol();    
+    
+};
+
+class OutputSymbol
+{
+    ofstream& output;
+    int m_code_size;
+    int m_pending_bits;
+    unsigned int m_pending_output;
+    unsigned int m_current_code;
+    unsigned int m_next_bump;
+    unsigned int m_max_code;
+    public:
+        OutputSymbol(ofstream& output, unsigned int maximo);
+        bool operator>> (const unsigned int &i);
+        ~OutputSymbol();
+    private:
+        void flush(const int val);
+};
+
+
+// Decompressor
 class InputStream
 {
     ifstream& input;

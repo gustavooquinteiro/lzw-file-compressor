@@ -1,22 +1,17 @@
 #include "../include/main.h"
 
 int main(int argc, char* argv[]){
-    if (argc < 3)
-    {
+    if (argc < 3){
         cerr << USAGE_ERROR;
         exit(EXIT_FAILURE);
-    } else
-    {
+    } else{
+        LZW algoritmo(argv[FILENAME_POSITION]);
         string parameter = argv[PARAMETER_POSITION];
-        if (parameter == COMPRESS_PARAMETER)
-        {
-            // TODO: Chamada a função de compressão
-        } else if (parameter == DECOMPRESS_PARAMETER) 
-        {
-            string filename  = argv[FILENAME_POSITION];
-            Decompressor lzw = Decompressor(filename);
-        } else
-        {
+        if (parameter == COMPRESS_PARAMETER){
+            algoritmo.compressor();
+        } else if (parameter == DECOMPRESS_PARAMETER) {
+            algoritmo.decompressor();
+        } else{
             cerr << PARAMETER_ERROR;
             exit(EXIT_FAILURE);
         }

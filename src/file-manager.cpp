@@ -1,6 +1,56 @@
 #include "../include/file-manager.h"
 
- InputStream::InputStream(ifstream& in, unsigned int maximo):input(in)
+InputSymbol::InputSymbol(ifstream& in): input(in) {}
+
+bool InputSymbol::operator>> ( char &c){
+    if( input.get(c) )
+        return true;
+    else
+        return false;
+}
+
+InputSymbol::~InputSymbol()
+{
+    input.close();
+}
+
+OutputSymbol::OutputSymbol(ofstream& out, unsigned int maximo):output(out)
+{
+    m_code_size = 9;
+    m_pending_bits = 0;
+    m_pending_output = 0;
+    m_current_code = 256;
+    m_next_bump = 512;
+    m_max_code = maximo;
+}
+
+void OutputSymbol::flush(const int val)
+{
+    while(m_pending_bits >= val){
+        output.put(m_pending_output & MASK);
+        m_pending_output >>= 8;
+        m_pending_bits -= 8;
+    }
+}
+
+bool OutputSymbol::operator>> (const unsigned int &i){
+    m_pending_output |= i <<m_pending_bits;
+    m_pending_bits += m_code_size;
+    flush(8);
+    if(m_current_code < m_max_code){
+        m_current_code++;
+        if( m_current_code == m_next_bump ){
+            m_next_bump *= 2;
+            m_code_size++;
+        }
+    }
+}
+
+OutputSymbol::~OutputSymbol(){
+    output.close();
+}
+
+InputStream::InputStream(ifstream& in, unsigned int maximo):input(in)
 {
     m_available_bits = 0;
     m_pending_bits = 0;

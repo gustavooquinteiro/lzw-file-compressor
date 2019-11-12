@@ -15,17 +15,18 @@
 
 using namespace std;
 
-class Decompressor
+class LZW
 {
     const unsigned int tamanho_maximo = (2 << BITS) - 1;
    
-    string nome_arquivo_compactado;
-    string nome_arquivo_descompactado;
+    string nome_arquivo_original;
+    string nome_arquivo_modificado;
 
     public:
-        Decompressor(string filename);
-        void lzwDecompression();
-        ~Decompressor();
+        LZW(string filename);
+        void compressor();
+        void decompressor();
+        ~LZW();
 };
 
 #endif 

@@ -29,3 +29,4 @@ Formato para descomprimir o arquivo ```nome-arquivo ```. O arquivo passado como 
 ## :gear: Compilando o Compactador
 É fornecido um [Makefile para plataformas UNIX](Makefile) para facilitar a compilação dos arquivos.  
 > Para compilá-los utilize o comando ``` make all ``` no diretório corrente ao Makefile. 
+> Colocando arquivos variados na pasta ```compress/``` dentro de tests, o Makefile é capaz de automatizar a execução da compressão, descompressão e verificação de corretude desses arquivos com o comando ```make tests``` 

@@ -27,7 +27,8 @@ RM = rm -rf
 GREEN=\033[0;32m
 NC=\033[0m
 
-TESTS_FOLDER = tests
+CFOLDER = tests/compress
+DFOLDER = tests/decompress
 
 # Regras de compilação
 all: clean objFolder $(PROJ_NAME)
@@ -56,21 +57,21 @@ clean:
 
 tests: init compress decompress check clean-tests
 
-init: compression-checker.cpp
+init: ./tests/compression-checker.cpp
 	@ $(CC) $< -o $(subst .cpp,,$<)
-	@ $(MKDIR) $(DFILE)
-	@ $(MKDIR) $(CFILE)
+	@ $(MKDIR) $(CFOLDER)
+	@ $(MKDIR) $(DFOLDER)
 
 compress:
-	@ $(foreach file, $(wildcard $(TESTS_FOLDER)/*), ./$(PROJ_NAME) -c $(file) | echo "Compactando $(file)" && ./compression-checker $(file) $(subst $(suffix $(file)),.cmp,$(file));)
+	@ $(foreach file, $(wildcard $(CFOLDER)/*), ./$(PROJ_NAME) -c $(file) | echo "Compactando $(file)" && ./tests/compression-checker $(file) $(subst $(suffix $(file)),.cmp,$(file)) && mv $(CFOLDER)/*.cmp $(DFOLDER)/;)
 
 decompress:
-	@ $(foreach file, $(wildcard $(TESTS_FOLDER)/*.cmp), ./$(PROJ_NAME) -d $(file) | echo "Descompactado $(file)";)
+	@ $(foreach file, $(wildcard $(DFOLDER)/*), ./$(PROJ_NAME) -d $(file) | echo "Descompactado $(file)";)
 	
 check:
-	@ $(foreach file, $(wildcard $(CFILE)/*), diff -s $(file) $(subst $(CFILE),$(DFILE),$(subst $(suffix $(file)),,$(file)));)
-	
+	@ $(foreach file, $(wildcard $(CFOLDER)/*), diff -s $(file) $(subst $(CFOLDER), $(DFOLDER), $(subst $(suffix $(file)),,$(file)));)
+
 clean-tests:
-	@ $(RM) $(DFILE)/**
+	@ $(RM) $(DFOLDER)/*
 
 .PHONY: all clean 

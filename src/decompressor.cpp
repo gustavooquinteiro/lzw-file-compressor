@@ -4,21 +4,15 @@
 LZW::LZW(string filename)
 {
     nome_arquivo_original = filename;
-    int posicao = filename.find(DOT);
-    nome_arquivo_modificado = filename.substr(0, posicao);
-    string extensao = filename.substr(posicao + 1);
-    if (extensao != EXTENSION)
-    {
-        cerr << EXTENSION_ERROR;
-        exit(EXIT_FAILURE);
-    }
+    int posicao = nome_arquivo_original.find(DOT);
+    nome_arquivo_modificado = nome_arquivo_original.substr(0, posicao);
 }
 
 void LZW::compressor()
 {
     ifstream arquivo(nome_arquivo_original);
     InputSymbol arquivo_original(arquivo);
-
+    nome_arquivo_modificado = nome_arquivo_modificado + DOT + EXTENSION;
     ofstream arquivo_compactado(nome_arquivo_modificado);
     OutputSymbol arquivo_modificado(arquivo_compactado, tamanho_maximo);
 
@@ -48,6 +42,8 @@ void LZW::compressor()
 
 void LZW::decompressor()
 {
+    if (!is_compacted_type()) 
+        return;
   
     ifstream arquivo(nome_arquivo_original);
     InputStream arquivo_compactado(arquivo, tamanho_maximo);    
@@ -81,6 +77,19 @@ void LZW::decompressor()
             simbolos[proximo_codigo++] = simbolo_anterior + simbolos[codigo][0];
         simbolo_anterior = simbolos[codigo];
     }
+}
+
+bool LZW::is_compacted_type()
+{
+    int posicao = nome_arquivo_original.find(DOT);
+    nome_arquivo_modificado = nome_arquivo_original.substr(0, posicao);
+    string extensao = nome_arquivo_original.substr(posicao + 1);
+    if (extensao != EXTENSION)
+    {
+        cerr << EXTENSION_ERROR;
+        exit(EXIT_FAILURE);
+    }
+    return true;
 }
 
 LZW::~LZW(){}

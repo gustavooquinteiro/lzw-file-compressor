@@ -26,6 +26,7 @@ class LZW
         LZW(string filename);
         void compressor();
         void decompressor();
+        bool is_compacted_type();
         ~LZW();
 };
 

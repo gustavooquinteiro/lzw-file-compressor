@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <stdlib.h>
-#include "decompressor.h"
+#include "LZW.h"
 using namespace std;
 
 #define PARAMETER_ERROR "Parametro desconhecido"

@@ -47,7 +47,7 @@ void OutputSymbol::operator<< (const unsigned int &i){
 }
 
 OutputSymbol::~OutputSymbol(){
-    output << EOF_CODE;
+    *this << EOF_CODE;
     flush(0);
     output.close();
 }

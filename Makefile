@@ -27,8 +27,8 @@ RM = rm -rf
 GREEN=\033[0;32m
 NC=\033[0m
 
-DFILE = tests/decompress
-CFILE = tests/compress
+TESTS_FOLDER = tests
+
 # Regras de compilação
 all: clean objFolder $(PROJ_NAME)
 
@@ -62,10 +62,10 @@ init: compression-checker.cpp
 	@ $(MKDIR) $(CFILE)
 
 compress:
-	@ $(foreach file, $(wildcard $(CFILE)/*), ./lzw -c $(file) $(subst $(CFILE), $(DFILE), $(subst $(suffix $(file)),.cmp,$(file))) | echo "Compactando $(file) em $(subst $(CFILE), $(DFILE), $(subst $(suffix $(file)),.cmp,$(file)))" && ./compression-checker $(file) $(subst $(CFILE), $(DFILE), $(subst $(suffix $(file)),.cmp,$(file)));)
+	@ $(foreach file, $(wildcard $(TESTS_FOLDER)/*), ./$(PROJ_NAME) -c $(file) | echo "Compactando $(file)" && ./compression-checker $(file) $(subst $(suffix $(file)),.cmp,$(file));)
 
 decompress:
-	@ $(foreach file, $(wildcard $(DFILE)/*), ./$(PROJ_NAME) -d $(file) | echo "Descompactado $(file)";)
+	@ $(foreach file, $(wildcard $(TESTS_FOLDER)/*.cmp), ./$(PROJ_NAME) -d $(file) | echo "Descompactado $(file)";)
 	
 check:
 	@ $(foreach file, $(wildcard $(CFILE)/*), diff -s $(file) $(subst $(CFILE),$(DFILE),$(subst $(suffix $(file)),,$(file)));)

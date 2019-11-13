@@ -31,7 +31,7 @@ class OutputSymbol
     unsigned int m_max_code;
     public:
         OutputSymbol(ofstream& output, unsigned int maximo);
-        bool operator>> (const unsigned int &i);
+        void operator<< (const unsigned int &i);
         ~OutputSymbol();
     private:
         void flush(const int val);

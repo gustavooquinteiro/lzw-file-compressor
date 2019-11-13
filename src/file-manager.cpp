@@ -33,7 +33,7 @@ void OutputSymbol::flush(const int val)
     }
 }
 
-bool OutputSymbol::operator>> (const unsigned int &i){
+void OutputSymbol::operator<< (const unsigned int &i){
     m_pending_output |= i <<m_pending_bits;
     m_pending_bits += m_code_size;
     flush(8);
@@ -47,6 +47,8 @@ bool OutputSymbol::operator>> (const unsigned int &i){
 }
 
 OutputSymbol::~OutputSymbol(){
+    output << EOF_CODE;
+    flush(0);
     output.close();
 }
 

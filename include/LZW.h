@@ -1,5 +1,5 @@
-#ifndef DECOMPRESSOR_H
-#define DECOMPRESSOR_H
+#ifndef LZW_H
+#define LZW_H
 
 #define EXTENSION_ERROR "Extensão de arquivo compactado não reconhecida"
 #define EXTENSION "cmp"

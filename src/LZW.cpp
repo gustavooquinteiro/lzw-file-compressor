@@ -1,4 +1,4 @@
-#include "../include/decompressor.h" 
+#include "../include/LZW.h" 
 
 
 LZW::LZW(string filename)

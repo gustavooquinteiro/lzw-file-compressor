@@ -31,12 +31,12 @@ void LZW::compressor()
                 simbolos [simbolo_atual] = proximo_codigo++;
             }
             simbolo_atual.erase(simbolo_atual.size()-1);
-            arquivo_compactado << simbolos[simbolo_atual];
+            arquivo_modificado << simbolos[simbolo_atual];
             simbolo_atual = caracter; 
         }
     }
     if( simbolo_atual.size()){
-        arquivo_compactado << simbolos[simbolo_atual];
+        arquivo_modificado << simbolos[simbolo_atual];
     }
 }
 

@@ -2,8 +2,13 @@
 #define FILE_MANAGER_H
 
 #define EOF_CODE 256
-#define BYTE 8
-#define MASK 0xff
+#define BYTE 6
+#define MASK 0xFF
+#define INITIAL_SIZE 12
+#define NEXT_BUMP 1 << INITIAL_SIZE
+#define CURRENT_CODE 1 << (INITIAL_SIZE - 1)
+#define ZERO 0
+#define ONE 1
 
 #include <fstream>
 #include <iostream>

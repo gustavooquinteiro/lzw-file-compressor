@@ -4,7 +4,7 @@
 #define EXTENSION_ERROR "Extensão de arquivo compactado não reconhecida"
 #define EXTENSION "cmp"
 #define DOT "."
-#define BITS 14
+#define BITS 13
 #define ALPHABET_SIZE 256
 
 #include <fstream>

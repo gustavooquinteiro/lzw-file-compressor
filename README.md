@@ -1,5 +1,5 @@
 # lzw-file-compressor
-![GitHub](https://img.shields.io/github/license/gustavooquinteiro/lzw-file-compressor?color=purple&style=flat-square) ![C++ Version](https://img.shields.io/badge/C++-8.3.0-blue.svg?style=flat-square&logo=c%2B%2B) ![Tested in](https://img.shields.io/badge/tested%20in-linux--64%20-orange)
+![License](https://img.shields.io/github/license/gustavooquinteiro/lzw-file-compressor?color=purple) ![C++ Version](https://img.shields.io/badge/C++-8.3.0-blue.svg?style=flat-square&logo=c%2B%2B) ![Tested in](https://img.shields.io/badge/tested%20in-linux--64%20-orange)
 
 Compactador de arquivos utilizando o algoritmo LZW desenvolvido por Daniel Lopes dos Santos e Gustavo Oliveira Quinteiro como trabaho da matéria MATA54 - Estrutura de Dados e Algoritmos II, ministrada pelo professor Flávio Morais de Assis Silva. 
 

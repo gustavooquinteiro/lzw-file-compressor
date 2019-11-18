@@ -44,8 +44,7 @@ int main(int argc, char**argv)
     cout << "_______________________________________________________________" << endl;
     cout <<"|Nome do arquivo   |   Tamanho do arquivo" << endl;
     cout <<"| "<< argv[1] << " | " << converter(original_size) << ((kilo)?"Kib":(mega)?"Mib": (giga)?"Gib":"b") <<endl;
-    cout <<"| "<< argv[2] << " | " << converter(compressed_size) << ((kilo)?"Kib":(mega)?"Mib": (giga)?"Gib":"b")<< endl;
-    cout << "_______________________________________________________________" << endl;
+    cout <<"| "<< argv[2] << " | " << converter(compressed_size) << ((kilo)?"Kib":(mega)?"Mib": (giga)?"Gib":"b")<< endl << endl;
     
     if (original_size > compressed_size)
     {
@@ -58,4 +57,6 @@ int main(int argc, char**argv)
     {
         cout << "Arquivo compactado maior que o original: Aumento de  " << converter(compressed_size - original_size) << ((kilo)?"Kib":(mega)?"Mib": (giga)?"Gib":"b") << endl;
     }
+     cout << "_______________________________________________________________" << endl;
+   
 }

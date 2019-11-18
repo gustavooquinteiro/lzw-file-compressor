@@ -4,10 +4,10 @@ PROJ_NAME = mata54comp
 # Arquivos .c encontrados em src/
 C_SOURCE = $(wildcard ./src/*.cpp)
 
-# Arquivos .h encontrados em lib/
+# Arquivos .h encontrados em include/
 H_SOURCE = $(wildcard ./include/*.h)
 
-# Arquivos objetos .o encontrados em obj/ após compilação
+# Arquivos objetos .o encontrados em build/ após compilação
 OBJ = $(subst .cpp,.o,$(subst src,build,$(C_SOURCE)))
 
 # Compilador utilizado
@@ -50,12 +50,12 @@ objFolder:
 	@ echo ' Criado diretório para objetos' 
 
 # Regra de limpeza de objetos e executável
-clean:
+clean: clean-tests
 	@ $(RM) build $(PROJ_NAME) *~
 	@ echo -e -n " [${GREEN} OK ${NC}]"
 	@ echo ' Workspace limpo'
 
-tests: init compress decompress check clean-tests
+tests: init compress decompress check
 
 init: ./tests/compression-checker.cpp
 	@ $(CC) $< -o $(subst .cpp,,$<)
@@ -63,15 +63,16 @@ init: ./tests/compression-checker.cpp
 	@ $(MKDIR) $(DFOLDER)
 
 compress:
-	@ $(foreach file, $(wildcard $(CFOLDER)/*), ./$(PROJ_NAME) -c $(file) | echo "Compactando $(file)" && ./tests/compression-checker $(file) $(subst $(suffix $(file)),.cmp,$(file)) && mv $(CFOLDER)/*.cmp $(DFOLDER)/;)
+	@ $(foreach file, $(wildcard $(CFOLDER)/*), ./$(PROJ_NAME) -c $(file) && ./tests/compression-checker $(file) $(subst $(suffix $(file)),.cmp,$(file)) && mv $(CFOLDER)/*.cmp $(DFOLDER)/;)
 
 decompress:
-	@ $(foreach file, $(wildcard $(DFOLDER)/*), ./$(PROJ_NAME) -d $(file) | echo "Descompactado $(file)";)
+	@ $(foreach file, $(wildcard $(DFOLDER)/*), ./$(PROJ_NAME) -d $(file);)
 	
 check:
 	@ $(foreach file, $(wildcard $(CFOLDER)/*), diff -s $(file) $(subst $(CFOLDER), $(DFOLDER), $(subst $(suffix $(file)),,$(file)));)
 
 clean-tests:
+	@ $(RM) ./tests/compression-checker
 	@ $(RM) $(DFOLDER)/*
 
 .PHONY: all clean 

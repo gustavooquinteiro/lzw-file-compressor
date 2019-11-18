@@ -4,7 +4,7 @@
 #define EXTENSION_ERROR "Extensão de arquivo compactado não reconhecida"
 #define EXTENSION "cmp"
 #define DOT "."
-#define BITS 13
+#define BITS 15
 #define ALPHABET_SIZE 256
 
 #include <fstream>
@@ -17,7 +17,7 @@ using namespace std;
 
 class LZW
 {
-    const unsigned int tamanho_maximo = (2 << BITS) - 1;
+    const unsigned int tamanho_maximo = (1 << BITS) - 1;
    
     string nome_arquivo_original;
     string nome_arquivo_modificado;

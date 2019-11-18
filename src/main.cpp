@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[]){
     if (argc < 3){
-        cerr << USAGE_ERROR;
+        cerr << USAGE_ERROR << endl;
         exit(EXIT_FAILURE);
     } else{
         LZW algoritmo(argv[FILENAME_POSITION]);
@@ -12,7 +12,7 @@ int main(int argc, char* argv[]){
         } else if (parameter == DECOMPRESS_PARAMETER) {
             algoritmo.decompressor();
         } else{
-            cerr << PARAMETER_ERROR;
+            cerr << PARAMETER_ERROR << endl;
             exit(EXIT_FAILURE);
         }
     }
